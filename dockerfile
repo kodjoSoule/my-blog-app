@@ -1,5 +1,5 @@
 # Utiliser l'image PHP avec FPM
-FROM php:7.4-fpm
+FROM php:8.2-fpm
 
 # Installer les dépendances nécessaires
 RUN apt-get update && apt-get install -y \
@@ -28,7 +28,7 @@ WORKDIR /var/www
 COPY composer.json .
 
 # Installer les dépendances PHP via Composer
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install
 
 # Copier le reste de l'application
 COPY . .

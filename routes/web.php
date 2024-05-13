@@ -26,15 +26,8 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
-//admin
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
 
-Route::get('/administration/posts', [AdminController::class, 'posts'])->name('administration.posts.index');
-Route::get('/administration/posts/{post}', [AdminController::class, 'post'])->name('administration.posts.show');
-Route::get('/administration/posts/{post}/edit', [AdminController::class, 'edit'])->name('administration.posts.edit');
-Route::patch('/administration/posts/{post}', [AdminController::class, 'update'])->name('administration.posts.update');
-Route::delete('/administration/posts/{post}', [AdminController::class, 'destroy'])->name('administration.posts.destroy');
 
 // ->middleware('can:admin')->name('admin.index');
 
