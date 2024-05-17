@@ -11,16 +11,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-
-    // dashboard
-    public function dashboard()
-    {
-        $user = Auth::user();
-        $postCount = $user->posts()->count();
-        $commentCount = $user->comments()->count();
-        return view('dashboard', ['postCount' => $postCount, 'commentCount' => $commentCount]);
-    }
-
     /**
      * Display the user's profile form.
      */

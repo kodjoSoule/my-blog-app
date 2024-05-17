@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Orchid\Filters\Types\Like;
-use Orchid\Filters\Types\Where;
-use Orchid\Filters\Types\WhereDateStartEnd;
-use Orchid\Platform\Models\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    use HasFactory, Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,19 +18,27 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
+        'gender',
+        'role',
+        'email_verified_at',
         'password',
+        'profile_photo_path',
+        'cover_photo_path',
+        'description',
+        'location',
+        'website',
     ];
 
     /**
-     * The attributes excluded from the model's JSON form.
+     * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
         'password',
         'remember_token',
-        'permissions',
     ];
 
     /**
@@ -37,33 +47,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'permissions'          => 'array',
-        'email_verified_at'    => 'datetime',
-    ];
-
-    /**
-     * The attributes for which you can use filters in url.
-     *
-     * @var array
-     */
-    protected $allowedFilters = [
-           'id'         => Where::class,
-           'name'       => Like::class,
-           'email'      => Like::class,
-           'updated_at' => WhereDateStartEnd::class,
-           'created_at' => WhereDateStartEnd::class,
-    ];
-
-    /**
-     * The attributes for which can use sort in url.
-     *
-     * @var array
-     */
-    protected $allowedSorts = [
-        'id',
-        'name',
-        'email',
-        'updated_at',
-        'created_at',
+        'email_verified_at' => 'datetime',
     ];
 }

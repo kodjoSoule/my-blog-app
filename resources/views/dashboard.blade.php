@@ -1,35 +1,204 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{-- {{ __('Dashboard') }} --}}
-            {{-- menu de administration --}}
-            {{ __('Tableau de bord') }}
-
+            {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    <div class="container">
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <a href="{{ route('administration.posts.index') }}"
-                class="card text-white bg-info mb-3">
-                    <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-file-alt"></i> Nombre de vos posts</h5>
-                                    <p class="card-text">{{ $postCount }}</p>
+    <div class="py-12 bg-gray-100">
+        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8 gap-8" >
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Users Card -->
+                <div class="bg-blue-500 overflow-hidden shadow-2xl sm:rounded-lg p-6 hover:scale-105 transition-all duration-200 ease-in-out transform">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-users text-white text-3xl mr-3"></i>
+                        <h3 class="text-lg font-semibold text-white">Utilisateurs</h3>
                     </div>
-                </a>
+                    <p class="text-white text-2xl">{{ $usersCount }} Utilisateur enregistrees</p>
+                </div>
+
+                <!-- Posts Card -->
+                <div class="bg-green-500 overflow-hidden shadow-2xl sm:rounded-lg p-6 hover:scale-105 transition-all duration-200 ease-in-out transform">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-newspaper text-white text-3xl mr-3"></i>
+                        <h3 class="text-lg font-semibold text-white">Posts</h3>
+                    </div>
+                    <p class="text-white text-2xl">{{ $postsCount }} post publier</p>
+                </div>
+
+                <!-- Comments Card -->
+                <div class="bg-yellow-500 overflow-hidden shadow-2xl sm:rounded-lg p-6 hover:scale-105 transition-all duration-200 ease-in-out transform">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-comments text-white text-3xl mr-3"></i>
+                        <h3 class="text-lg font-semibold text-white">Comments</h3>
+                    </div>
+                    <p class="text-white text-2xl">{{ $commentsCount }} comments made</p>
+                </div>
             </div>
-            <div class="col-md-6">
-                <a href=""
-                 class="card text-white bg-success mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-comments"></i> Nombre de vos commentaires</h5>
-                        <p class="card-text">{{ $commentCount }}</p>
+            {{-- chart js --}}
+            <div class="flex flex-wrap mt-6">
+                <div class="w-full sm:w-1/2 mb-2 p-2">
+                    <div class="bg-white shadow rounded overflow-hidden">
+                        <div class="p-6">
+                            <h5 class="text-lg font-semibold mb-4">
+                                Nombre de posts par mois
+                            </h5>
+                            <!-- Line Chart -->
+                            <canvas id="lineChart" class="max-h-[400px]"></canvas>
+                        </div>
                     </div>
-                </a>
+                </div>
+
+                {{-- nombre utilisatuer par mois --}}
+                <div class="w-full sm:w-1/2 mb-2 p-2 ">
+                    <div class="bg-white shadow rounded overflow-hidden">
+                        <div class="p-6">
+                            <h5 class="text-lg font-semibold mb-4">
+                                Nombre d'utilisateurs par mois
+                            </h5>
+                            <!-- Line Chart -->
+                            <canvas id="lineChart-user-by-month" class="max-h-[400px]"></canvas>
+                        </div>
+                    </div>
+                </div>
+                {{-- Pie chart : nombre de utilisateur par sexe --}}
+                <div class="w-full sm:w-1/2 mb-2 p-2">
+                    <div class="bg-white shadow rounded overflow-hidden">
+                        <div class="p-6">
+                            <h5 class="text-lg font-semibold mb-4">
+                                Nombre d'utilisateurs par sexe
+                            </h5>
+                            <!-- Pie Chart -->
+                            <canvas id="pieChart" class="max-h-[400px]"></canvas>
+                        </div>
+                    </div>
+                </div>
+                {{-- Bar Chart : nombre commentaire--}}
+                <div class="w-full sm:w-1/2 mb-2 p-2">
+                    <div class="bg-white shadow rounded overflow-hidden">
+                        <div class="p-6">
+                            <h5 class="text-lg font-semibold mb-4">
+                                Nombre de commentaires par mois
+                            </h5>
+                            <!-- Bar Chart -->
+                            <canvas id="barChart" class="max-h-[400px]"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
     </div>
-</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+	// <!-- Start Line CHart for posts -->
+	new Chart(document.querySelector("#lineChart"), {
+		type: "line",
+		data: {
+			labels: ["January", "February", "March", "April", "May", "June", "July"],
+			datasets: [
+				{
+					label: "Line Chart",
+					data: [65, 59, 80, 81, 56, 55, 40],
 
+					fill: false,
+					borderColor: "rgb(75, 192, 192)",
+					tension: 0.1,
+				},
+			],
+		},
+		options: {
+			scales: {
+				y: {
+					beginAtZero: true,
+				},
+			},
+		},
+	});
+	// <!-- End Line CHart -->
+
+    new Chart(document.querySelector("#lineChart-user-by-month"), {
+        type: "line",
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [
+                {
+                    label: "Line Chart",
+                    // data: [65, 59, 80, 81, 56, 55, 40],
+                    data: {!! json_encode($data_posts_by_month->pluck('user_count')) !!},
+
+                    fill: false,
+                    borderColor: "rgb(75, 192, 192)",
+                    tension: 0.1,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+    // <!-- End Line CHart -->
+
+    // <!-- Start Pie CHart -->
+    new Chart(document.querySelector("#pieChart"), {
+        type: "pie",
+        data: {
+            labels: ["Homme", "Femme"],
+            datasets: [
+                {
+                    label: "My First Dataset",
+                    data: [300, 50, 100, 40, 120, 200],
+                    backgroundColor: [
+                        "rgb(255, 99, 132)",
+                        "rgb(54, 162, 235)",
+                        "rgb(255, 205, 86)",
+                        "rgb(75, 192, 192)",
+                        "rgb(153, 102, 255)",
+                        "rgb(255, 159, 64)",
+                    ],
+                    hoverOffset: 4,
+                },
+            ],
+        },
+    });
+
+    new Chart(document.querySelector("#barChart"), {
+        type: "bar",
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [
+                {
+                    label: "Bar Chart",
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    backgroundColor: "rgb(75, 192, 192)",
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+
+
+
+
+	const config = {
+		type: "bar",
+		data: data,
+		options: {},
+	};
+	// Créer le graphique
+	const ctx = document.getElementById("myChart").getContext("2d");
+	new Chart(ctx, config);
+});
+
+</script>
 </x-app-layout>

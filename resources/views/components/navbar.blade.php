@@ -1,46 +1,31 @@
-<header class="container">
+<header class="sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url('/') }}">Mon Blog</a>
-            <div class="navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/') }}">Accueil</a>
-                    </li>
-                    {{-- posts --}}
-                    <li>
-                        <a class="nav-link" href="{{ url('/posts') }}">Posts</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/') }}">Accueil</a>
-                    </li> --}}
-                    @auth
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
-                    </li> --}}
-                    <li>
-                        <a href="{{ route('dashboard') }}" class="nav-link text-white">{{ auth()->user()->name }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            {{-- user name --}}
-                            <button type="submit" class="nav-link btn btn-link">Déconnexion</button>
-                        </form>
-                    </li>
-                    @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Connexion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Inscription</a>
-                    </li>
-                    @endauth
-                </ul>
-            </div>
+    <div class="flex items-center justify-between px-4 py-3 sm:p-0">
+        <div>
+            <a class="text-2xl font-semibold no-underline hover:text-blue-500" href="{{ url('/') }}">Mon Blog</a>
+        </div>
+        <div class="sm:hidden">
+            <button type="button" class="block text-black hover:text-blue-500 focus:text-blue-500 focus:outline-none">
+                <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <nav class="sm:flex sm:items-center">
+        <div class="hidden sm:block sm:ml-6">
+            <a class="{{ Request::routeIs('home') ? 'text-blue-500' : 'hover:text-blue-500' }}" href="{{ url('/') }}">Accueil</a>
+            <a class="ml-3 {{ Request::routeIs('posts.*') ? 'text-blue-500' : 'hover:text-blue-500' }}" href="{{ url('/posts') }}">Posts</a>
+            @auth
+            <a class="ml-3 {{ Request::routeIs('dashboard') ? 'text-blue-500' : 'hover:text-blue-500' }}" href="{{ route('dashboard') }}">{{ auth()->user()->name }}</a>
+            <form method="POST" action="{{ route('logout') }}" class="ml-3 inline-block">
+                @csrf
+                <button type="submit" class="hover:text-blue-500 bg-transparent border-none">Déconnexion</button>
+            </form>
+            @else
+            <a class="ml-3 {{ Request::routeIs('login') ? 'text-blue-500' : 'hover:text-blue-500' }}" href="{{ route('login') }}">Connexion</a>
+            <a class="ml-3 {{ Request::routeIs('register') ? 'text-blue-500' : 'hover:text-blue-500' }}" href="{{ route('register') }}">Inscription</a>
+            @endauth
         </div>
     </nav>
 </header>

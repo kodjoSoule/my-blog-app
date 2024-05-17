@@ -12,7 +12,7 @@ class HomeController extends Controller
     {
         // $posts = Post::latest()->take(4)->get();
         //ce qui sont publier
-        $posts = Post::where('is_published', 1, now())->latest()->take(4)->get();
+        $posts = Post::where('is_published', 1, now())->latest()->take(10)->get();
         return view('home', ['posts' => $posts]);
     }
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->string('image_path')->nullable();
             $table->boolean('is_published')->default(false);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
