@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\admin\posts\AdminPostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -23,9 +23,40 @@ Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.e
 Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
+//admin posts
+Route::get('/admin/posts', [AdminPostController::class, 'index'])->name('admin.posts.index');
+// Route::post('/admin/posts', [AdminPostController::class, 'store'])->name('admin.posts.store');
+// Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
+// Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
+// Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
+// Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update'])->name('admin.posts.update');
+
+
 //comments
+Route::get('/posts/{post}/comments', [CommentController::class, 'index'])->name('comments.index');
+
 Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+//comments admin
+Route::get('/admin/comments', [CommentController::class, 'index'])->name('admin.comments.index');
+Route::post('/admin/comments', [CommentController::class, 'store'])->name('admin.comments.store');
+Route::get('/admin/comments/create', [CommentController::class, 'create'])->name('admin.comments.create');
+Route::delete('/admin/comments/{comment}', [CommentController::class, 'destroy'])->name('admin.comments.destroy');
+Route::get('/admin/comments/{comment}/edit', [CommentController::class, 'edit'])->name('admin.comments.edit');
+Route::patch('/admin/comments/{comment}', [CommentController::class, 'update'])->name('admin.comments.update');
+
+
+
+//Reports
+Route::get('/reports', function () {
+    return "reports.index";
+})->middleware(['auth', 'verified'])->name('reports.index');
+
+// profile
+Route::get('/profile', function () {
+    return "profile.show";
+})->name('profile.show');
+
 
 //admin dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

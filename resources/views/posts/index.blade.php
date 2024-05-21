@@ -1,16 +1,22 @@
 @extends('layouts.layout')
 
-@section('title', 'Page d\'accueil')
+@section('title', 'Tous les Articles')
 
 @section('navbar')
     @include('components.navbar')
 @endsection
 
 @section('content')
-<div class="container mx-auto px-4 mt-5">
+<div class="container mx-auto p-4">
+    <div class="jumbotron jumbotron-fluid text-center bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-16 mb-8 rounded-lg shadow-lg animate__animated animate__fadeInDown">
+        <div class="container">
+            <h1 class="text-5xl font-bold">Tous les Articles</h1>
+            <p class="text-xl mt-4">Explorez les articles les plus récents de notre blog.</p>
+        </div>
+    </div>
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-3xl font-bold text-primary">Tous les Articles</h1>
-        <a href="{{ route('posts.create') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Créer un article</a>
+        <h1 class="text-3xl font-bold text-gray-800">Tous les Articles</h1>
+        <a href="{{ route('posts.create') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-500 ease-in-out transform hover:scale-105">Créer un article</a>
     </div>
     <div class="flex flex-wrap -mx-4">
         @foreach($posts as $post)
@@ -29,11 +35,7 @@
             </div>
         @endforeach
     </div>
-    {{-- <div class="flex justify-center mt-4">
-        {{ $posts->links() }}
-    </div> --}}
-
-    <div class="flex justify-center mt-4 space-x-4">
+    <div class="flex justify-center mt-8">
         {{ $posts->links('vendor.pagination.tailwind') }}
     </div>
 </div>
