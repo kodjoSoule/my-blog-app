@@ -14,8 +14,12 @@ class AdminPostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::latest()->paginate(10);
         return view('admin.posts.index', ['posts' => $posts]);
+    }
+    public function show(Post $post)
+    {
+        return view('admin.posts.show', compact('post'));
     }
 
     public function create()

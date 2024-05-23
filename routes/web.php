@@ -25,11 +25,12 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.
 
 //admin posts
 Route::get('/admin/posts', [AdminPostController::class, 'index'])->name('admin.posts.index');
-// Route::post('/admin/posts', [AdminPostController::class, 'store'])->name('admin.posts.store');
-// Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
-// Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
-// Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
-// Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update'])->name('admin.posts.update');
+Route::post('/admin/posts', [AdminPostController::class, 'store'])->name('admin.posts.store');
+Route::get('/admin/posts/{post}', [AdminPostController::class, 'show'])->name('admin.posts.show');
+Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
+Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
+Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
+Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update'])->name('admin.posts.update');
 
 
 //comments
@@ -56,6 +57,12 @@ Route::get('/reports', function () {
 Route::get('/profile', function () {
     return "profile.show";
 })->name('profile.show');
+Route::get('/profile/edit', function () {
+    return "profile.edit";
+})->name('profile.edit');
+Route::patch('/profile', function () {
+    return "profile.update";
+})->name('profile.update');
 
 
 //admin dashboard
