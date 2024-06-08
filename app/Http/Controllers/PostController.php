@@ -21,7 +21,9 @@ class PostController extends Controller
     }
 
     /**
+     *
      * Show the form for creating a new resource.
+     *
      */
     public function create()
     {
@@ -57,7 +59,9 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //edit post
+
+
     }
 
     /**
@@ -65,14 +69,23 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        $post = Post::find($id);
+        $post->update($data);
+
+        return redirect()->route('posts.show', ['id' => $post->id]);
     }
 
     /**
+     *
      * Remove the specified resource from storage.
+     *
      */
     public function destroy(string $id)
     {
-        //
     }
 }
