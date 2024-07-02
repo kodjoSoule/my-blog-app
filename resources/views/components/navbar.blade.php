@@ -1,5 +1,4 @@
 <header class="sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3">
-    <!-- Navbar -->
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
         <div>
             <a class="text-2xl font-semibold no-underline hover:text-blue-500" href="{{ url('/') }}">Mon Blog</a>
@@ -12,8 +11,8 @@
             </button>
         </div>
     </div>
-    <nav id="navbarMenu" class="sm:flex sm:items-center">
-        <div class="hidden sm:block sm:ml-6">
+    <nav id="navbarMenu" class="hidden sm:flex sm:items-center">
+        <div class="sm:ml-6">
             <a class="{{ Request::routeIs('home') ? 'text-blue-500' : 'hover:text-blue-500' }}" href="{{ url('/') }}">Accueil</a>
             <a class="ml-3 {{ Request::routeIs('posts.*') ? 'text-blue-500' : 'hover:text-blue-500' }}" href="{{ url('/posts') }}">Posts</a>
             @auth
@@ -30,14 +29,13 @@
     </nav>
 </header>
 
-
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const menuButton = document.getElementById('menuButton');
         const navbarMenu = document.getElementById('navbarMenu');
 
         menuButton.addEventListener('click', function() {
+            // This will toggle the 'hidden' class on the navbarMenu
             navbarMenu.classList.toggle('hidden');
         });
     });
