@@ -7,6 +7,18 @@
 @endsection
 
 @section('content')
+
+<div id="loading-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-60">
+    <svg class="animate-spin h-8 w-8 text-white mr-3" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+        </path>
+    </svg>
+    <span class="text-white text-3xl font-bold">Loading...</span>
+</div>
+
 <div class="container mx-auto p-4">
     <div class="jumbotron jumbotron-fluid text-center bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-16 mb-8 rounded-lg shadow-lg animate__animated animate__fadeInDown">
         <div class="container">
@@ -39,8 +51,20 @@
         {{ $posts->links('vendor.pagination.tailwind') }}
     </div>
 </div>
+
+<script>
+    // Attendre que la page soit complètement chargée
+    window.addEventListener('load', function() {
+      // Sélectionner l'élément du spinner par son ID
+      var loader = document.getElementById('loading-overlay');
+      // Masquer le spinner
+      loader.style.display = 'none';
+    });
+  </script>
+
 @endsection
 
 @section('footer')
     @include('components.footer')
 @endsection
+

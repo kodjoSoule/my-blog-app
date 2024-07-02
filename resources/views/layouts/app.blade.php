@@ -39,7 +39,14 @@
                 {{ $slot }}
             </main>
         </div>
-
+        <script>
+            window.addEventListener('load', function() {
+                var loader = document.getElementById('loading-overlay');
+                if (loader) {
+                    loader.style.display = 'none';
+                }
+            });
+        </script>
 
     </body>
 </html>
